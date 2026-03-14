@@ -1,0 +1,13 @@
+const first_name="aya";
+const last_name="elbaz";
+const age=20;
+const is_student=true;
+const full_name=first_name+" "+last_name;
+const full_name_template=`${first_name} ${last_name}`;
+const full_name_template_2=`${first_name} ${last_name} is ${age} years old and is a student: ${is_student}`;
+const full_name_template_3=`${first_name} ${last_name} is ${age} years old and is a student: ${is_student}`;
+const full_name_template_4=`${first_name} ${last_name} is ${age} years old and is a student: ${is_student}`;
+const full_name_template_5=`${first_name} ${last_name} is ${age} years old and is a student: ${is_student}`;
+const full_name_template_6=`${first_name} ${last_name} is ${age} years old and is a student: ${is_student}`;
+const full_name_template_7=`${first_name} ${last_name} is ${age} years old and is a student: ${is_student}`;
+const full_name_template_8=`${first_name} ${last_name} is ${age} years old and is a student: ${is_student}`;

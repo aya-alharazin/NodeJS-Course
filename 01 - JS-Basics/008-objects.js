@@ -1,0 +1,21 @@
+let person ={
+    name:"aya",
+    age:20,
+    is_student:true,
+    hobbies:["reading","writing","coding"],
+    address:{
+        city:"cairo",
+        country:"egypt"
+    }
+}
+console.log(person)
+console.log(person.name)
+console.log(person.age)
+console.log(person.is_student)
+console.log(person.hobbies)
+console.log(person.address)
+console.log(person.address.city)
+console.log(person.address.country)
+console.log(person.address.street)
+console.log(person.address.zip)
+console.log(person.address.country)
