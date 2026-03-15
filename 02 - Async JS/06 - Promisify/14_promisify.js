@@ -12,7 +12,7 @@ const getProductByName = (name, cb) => {
         }
     })
 }
-
+ 
 const findProduct = promisify(getProductByName)
 
 findProduct('Tea Ahmad')
