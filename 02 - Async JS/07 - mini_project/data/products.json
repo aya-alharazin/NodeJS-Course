@@ -1,0 +1,5 @@
+[
+    { "id": 1, "name": "Tea Ahmad", "price": 15, "store_id": 101 },
+    { "id": 2, "name": "Coffee Blend", "price": 25, "store_id": 102 },
+    { "id": 3, "name": "Milk Tea", "price": 20, "store_id": 101 }
+  ]  
