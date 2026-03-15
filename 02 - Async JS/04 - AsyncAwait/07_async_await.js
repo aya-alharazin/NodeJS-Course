@@ -1,16 +1,22 @@
-function fetchUser() {
-    return new Promise(function(resolve) {
-        setTimeout(function() {
-            resolve({ name: "Aya", age: 25 });
-        }, 2000);
-    });
+
+// async
+const getUSData = async () => {
+    const response = await fetch('https://datausa.io/api/data?drilldowns=Nation&measures=Population');
+
+    // error case
+    if (response.status !== 200) {
+        throw new Error('cannot fetch the data');
+    }
+
+    const json = await response.json()
+    return json;
 }
 
-async function getUser() {
-    console.log("A - before await");
-    const user = await fetchUser();
-    console.log("B - got user:", user.name);
-}
-
-getUser();
-console.log("C - after calling getUser");
+// run
+getUSData()
+    .then(data => {
+        console.log(data)
+    })
+    .catch(err => {
+        console.log(err)
+    })
