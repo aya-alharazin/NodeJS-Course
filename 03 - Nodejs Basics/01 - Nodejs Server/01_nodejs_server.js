@@ -1,4 +1,3 @@
-const { log } = require('console');
 const http=require('http')
 
 const server = http.createServer((req,res)=>{
@@ -31,7 +30,7 @@ const server = http.createServer((req,res)=>{
 
 // to run server
 server.listen(5050,()=>{
-    console.log('Hi Finally I learn Node');
+    console.log('Now the Server running on port 5050');
     
 })
 //localhost:5050
