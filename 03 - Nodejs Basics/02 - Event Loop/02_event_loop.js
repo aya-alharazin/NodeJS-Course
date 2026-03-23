@@ -16,5 +16,8 @@ server.listen(5050,()=>{
     
 })
 console.log("HI");
-
+setImmediate(()=>{
+    console.log("Hi there");
+    
+})
 
