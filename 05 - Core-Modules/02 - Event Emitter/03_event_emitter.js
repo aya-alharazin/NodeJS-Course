@@ -13,3 +13,7 @@ myEmitter.on('greeting', name => {
 
 // emitter
 myEmitter.emit('greeting', 'Anas');
+
+
+
+
