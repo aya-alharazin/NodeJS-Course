@@ -1,10 +1,10 @@
 const express = require('express');
+const middlewares = require('./middlewares')
+const routes = require('./routes')
 const app = express();
-app.get('/',(req,res,next)=>{
-    res.redirect('/admin');
-})
+middlewares(app)
+routes(app)
 
-app.get('/admin',(req,res,next)=>{
-    res.redirect('/');
-})
+
+
 module.exports = app;
