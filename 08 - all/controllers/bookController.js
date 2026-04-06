@@ -1,7 +1,7 @@
 const {dbConnection} = require('../config')
 const getBooks = (req,res,next)=>{
-    dbConnection('books',(collection)=>{
-        const books = collection.find({}).toArray()
+     dbConnection('books',async (collection)=>{
+        const books = await collection.find({}).toArray()
         res.send(books)
     })
 }
