@@ -1,6 +1,6 @@
 const {dbConnection} = require('../config')
 const {ObjectId} = require('bson')
-const {createError} = require('http-errors')
+const createError = require('http-errors')
 const getBooks = (req,res,next)=>{
     const pageNumber = parseInt(req.query.page)
     if(isNaN(pageNumber)){

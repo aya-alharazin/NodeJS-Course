@@ -1,5 +1,5 @@
 const express = require('express')
-const {createError} = require('http-errors')
+const createError = require('http-errors')
 const app = express()
 const routes = require('./routes')
 
@@ -12,7 +12,7 @@ process.on('unhandledRejection',(reason)=>{
 routes(app)
 // Not Found Handler
 app.use((req,res,next)=>{
-    const error = createError("404")
+    const error = createError(404,"aya")
     next(error)
 })
 
