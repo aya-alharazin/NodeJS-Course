@@ -28,8 +28,15 @@ const getBooksPageCount = (req,res,next)=>{
 }
 
 const getBookById = (req,res,next)=>{
+    if(!ObjectId.isValid(req.params.id)){
+        res.status(400).json({
+            "status":false,
+            "message" :"id not valid"
+        })
+    }
     const _id = new ObjectId(req.params.id)
     dbConnection('books', async (collection)=>{
+    try{
         const book = await collection.findOne(_id)
         if(!book){
             res.status(404).json({
@@ -38,7 +45,13 @@ const getBookById = (req,res,next)=>{
             })
         }
         res.json(book)
-        
+
+    }catch(err){
+        res.status(500).json({
+            "status":false,
+            "message" :"server error"
+        })
+    }        
     })
     
 }
