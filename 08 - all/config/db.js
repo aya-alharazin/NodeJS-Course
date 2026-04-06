@@ -13,11 +13,5 @@ const dbConnection = (collection,cb)=>{
         console.log(err);
     })
 }
-dbConnection('books',async (collection)=>{
-    const book = await collection.findOne({})
-    console.log(book);
-    
-})
-
 
 module.exports = dbConnection
