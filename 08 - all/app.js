@@ -9,6 +9,11 @@ process.on('unhandledRejection',(reason)=>{
     process.exit(1)
 })
 
-
+app.get((err,req,res,next)=>{
+    res.json({
+        status:err.statusCode,
+        message:err.message
+    })
+})
 
 module.exports = app
