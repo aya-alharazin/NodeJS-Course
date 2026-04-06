@@ -1,6 +1,6 @@
 const express = require('express')
-require('./routes')
+const routes = require('./routes')
 const app = express()
 routes(app)
 
-module.exports=app
+module.exports= app
