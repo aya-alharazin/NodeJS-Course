@@ -1,4 +1,5 @@
 const {dbConnection} = require('../config')
+const {ObjectId} = require('bson')
 const getBooks = (req,res,next)=>{
     const pageNumber = parseInt(req.query.page)
     if(isNaN(pageNumber)){
@@ -27,9 +28,17 @@ const getBooksPageCount = (req,res,next)=>{
 }
 
 const getBookById = (req,res,next)=>{
-    const _id = req.params.id
-    dbConnection('books',(collection)=>{
-        collection.findOne({})
+    const _id = new ObjectId(req.params.id)
+    dbConnection('books', async (collection)=>{
+        const book = await collection.findOne({'_id':_id})
+        if(!book){
+            res.status(404).json({
+                "status":false,
+                "message" :"Book Not Found"
+            })
+        }
+        res.json(book)
+        
     })
     
 }
