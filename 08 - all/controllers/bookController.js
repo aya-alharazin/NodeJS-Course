@@ -26,4 +26,12 @@ const getBooksPageCount = (req,res,next)=>{
     })
 }
 
-module.exports = {getBooks,getBooksPageCount}
+const getBookById = (req,res,next)=>{
+    const _id = req.params.id
+    dbConnection('books',(collection)=>{
+        collection.findOne({})
+    })
+    
+}
+
+module.exports = {getBooks,getBooksPageCount,getBookById}
