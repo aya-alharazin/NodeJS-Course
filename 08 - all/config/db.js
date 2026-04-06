@@ -1,4 +1,5 @@
 const {MongoClient} = require("mongodb")
+require("node:dns/promises").setServers(["1.1.1.1", "8.8.8.8"]);
 require('dotenv').config()
 const _uri = process.env.MONGO_URI
 const dbConnection = (collection,cb)=>{
