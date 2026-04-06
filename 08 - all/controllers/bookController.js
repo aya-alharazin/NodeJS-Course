@@ -30,7 +30,7 @@ const getBooksPageCount = (req,res,next)=>{
 const getBookById = (req,res,next)=>{
     const _id = new ObjectId(req.params.id)
     dbConnection('books', async (collection)=>{
-        const book = await collection.findOne({'_id':_id})
+        const book = await collection.findOne(_id)
         if(!book){
             res.status(404).json({
                 "status":false,
