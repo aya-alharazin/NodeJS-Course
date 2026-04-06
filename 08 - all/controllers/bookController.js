@@ -6,4 +6,4 @@ const getBooks = (req,res,next)=>{
     })
 }
 
-module.exports = getBooks
+module.exports = { getBooks }
