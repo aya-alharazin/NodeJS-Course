@@ -1,5 +1,6 @@
 const {dbConnection} = require('../config')
 const {ObjectId} = require('bson')
+const {createError} = require('http-errors')
 const getBooks = (req,res,next)=>{
     const pageNumber = parseInt(req.query.page)
     if(isNaN(pageNumber)){
@@ -29,9 +30,10 @@ const getBooksPageCount = (req,res,next)=>{
 
 const getBookById = (req,res,next)=>{
     if(!ObjectId.isValid(req.params.id)){
-        res.status(400).json({
-            "status":false,
-            "message" :"id not valid"
+        const error = createError(400,'Id is not valid')
+        res.status(error.statusCode).json({
+            status:false,
+            message :error.message
         })
     }
     const _id = new ObjectId(req.params.id)
@@ -39,17 +41,19 @@ const getBookById = (req,res,next)=>{
     try{
         const book = await collection.findOne(_id)
         if(!book){
-            res.status(404).json({
-                "status":false,
-                "message" :"Book Not Found"
+            const error = createError(404,'book not found')
+            res.status(error.statusCode).json({
+                status:false,
+                message :error.message
             })
         }
         res.json(book)
 
     }catch(err){
-        res.status(500).json({
-            "status":false,
-            "message" :"server error"
+        const error = createError(500,err.message)
+        res.status(error.statusCode).json({
+            status:false,
+            message :error.message
         })
     }        
     })
