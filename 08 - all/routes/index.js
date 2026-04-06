@@ -1,3 +1,4 @@
-const app = require('../app')
-const router = require('./bookRoutes')
-app.use('books',router)
+const bookRouter = require('./bookRoutes')
+module.exports = (app)=>{
+    app.use('books',bookRouter)
+}
