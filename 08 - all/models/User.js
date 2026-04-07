@@ -23,7 +23,7 @@ const user = new User({
     username:"aassssssssssssssssssssssssssssssaa",
     password:"22323"
 })
-const val = user.validate();
+const val = User.validate();
 console.log(val);
 
 
