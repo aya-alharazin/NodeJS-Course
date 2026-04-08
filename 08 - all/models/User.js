@@ -14,6 +14,20 @@ class User{
         const validationResult = UserValidator.validate(userData)
         return validationResult
     }
+
+    isExsit(){
+        dbConnection('users',async(collection)=>{
+            const userEmail = await collection.findOne(
+                {
+                '$or':
+                [{email:this.userData.emai},
+                {username:this.userData.username}
+                ]
+                }
+            )
+            
+        })
+    }
 }
 
 
