@@ -17,14 +17,16 @@ class User{
 
     isExsit(){
         dbConnection('users',async(collection)=>{
-            const userEmail = await collection.findOne(
-                {
-                '$or':
-                [{email:this.userData.emai},
-                {username:this.userData.username}
-                ]
+            const user = await collection.findOne(
+                {'$or': [{email:this.userData.emai},
+                {username:this.userData.username} ]
                 }
             )
+            if(user){
+                return {check:flase}
+            }
+            return {check:true}
+
             
         })
     }
