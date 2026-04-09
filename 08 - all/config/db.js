@@ -1,19 +1,23 @@
 const {MongoClient} = require('mongodb')
 require("node:dns/promises").setServers(["1.1.1.1", "8.8.8.8"]);
 require('dotenv').config()
+let db;
 const dbConnection = (collection , cb)=>{
     
     MongoClient.connect(process.env.MONGO_URI)
     .then(async (client)=>{
-        const db = client.db('nodejs').collection(collection)
-        await cb(db)
-        client.close()
+        db = client.db('nodejs')
     })
     .catch((err)=>{
         console.log(err);
     })
 }
+const getCollection=(collection)=>{
+    return db.collection(collection)
+}
 
 
-module.exports = dbConnection
+module.exports = {
+    dbConnection,getCollection
+}
 
