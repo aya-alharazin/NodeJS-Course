@@ -23,12 +23,13 @@ class User{
                 }
             )
             if(user){
-                return {check:flase}
+                return {check:false}
             }
             return {check:true}
 
             
         })
+        
     }
 }
 
@@ -39,7 +40,7 @@ const user = new User({
     username:"aassssssssssssssssssssssssssssssaa",
     password:"22323"
 })
-const val = User.validate();
+const val = User.validate(user);
 console.log(val);
 
 
