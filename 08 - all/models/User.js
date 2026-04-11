@@ -65,8 +65,8 @@ const user = new User({
     password:"22323"
 })
 user.isExsit()
-    .then((user)=>{
-        console.log(user);
+    .then((status)=>{
+        console.log(status);
         
     })
 
