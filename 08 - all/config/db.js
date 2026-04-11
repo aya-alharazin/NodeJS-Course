@@ -17,7 +17,6 @@ const dbConnection = async (collection ,cb)=>{
 
 
 
-module.exports = {
-    dbConnection
-}
+module.exports =   dbConnection
+
 

@@ -1,4 +1,4 @@
-const {db} = require('../config')
+const {dbConnection} = require('../config')
 const {UserValidator} = require("../validators")
 class User{
     constructor(userData){
@@ -6,9 +6,19 @@ class User{
     }
 
     save(){
-        dbConnection('users',async (collection)=>{
-            await collection.insertOne(this.userData)
-        })
+        try{
+            dbConnection('users',async (collection)=>{
+                await collection.insertOne(this.userData)
+            })
+            return {
+                status:true
+            }
+        }catch(err){
+            return {
+                status:false,
+                message:err.message
+            }
+        }
     }
     static validate(userData){
         const validationResult = UserValidator.validate(userData)
@@ -64,11 +74,8 @@ const user = new User({
     username:"hh1",
     password:"22323"
 })
-user.isExsit()
-    .then((status)=>{
-        console.log(status);
-        
-    })
+console.log(user.save());
+
 
 
 // user.save()
