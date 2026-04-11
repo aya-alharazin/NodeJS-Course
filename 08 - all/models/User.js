@@ -16,26 +16,52 @@ class User{
     }
 
     async isExsit(){
-        await db.dbConnection()
-        const collection = await db.getCollection('users')
-        const user = await collection.findOne({
-            '$or':[
-                {usename:this.userData.usename},
-                {email:this.userData.email}
-            ]
-        })
-        if(user){
-            return user
-            
+        return new Promise((resolve,reject)=>{
+            db.dbConnection('users',async(collection)=>{
+                try{
+                const user = await collection.findOne({
+                    '$or':[
+                        {email:this.userData.email},
+                        {username:this.userData.username}
+                    ]
+                })
+                if(!user){
+                    resolve({
+                        check:false
+                    })
+                }else{
+                    if(user.email === this.userData.email && user.username === this.userData.username){
+                        resolve({
+                            check:true,
+                            message:"email and username already exsit"
+                        })
+                    }
+                    else if(user.email === this.userData.email){
+                        resolve({
+                            check:true,
+                            message:"email already exsit"
+                        })
+                    }else if(user.username === this.userData.username ){
+                        resolve({
+                            check:true,
+                            message:"email already exsit"
+                        })
+                    }
+                }
+        }catch(e){
+            reject(e)
         }
+    })
+        })
+        
     }
 }
 
 
 const user = new User({
     name :"aya",
-    email:"alharazinaya@gmail.com",
-    username:"aassssssssssssssssssssssssssssssaa",
+    email:"alarazinaya@gmail.com",
+    username:"hh1",
     password:"22323"
 })
 user.isExsit()
