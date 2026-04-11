@@ -68,19 +68,6 @@ class User{
 }
 
 
-const user = new User({
-    name :"ahmed",
-    email:"alarazinaya@gmail.com",
-    username:"hh1",
-    password:"22323"
-})
-user.save()
-.then((status)=>{
-    console.log(status);
-    
-})
-
-
 
 // user.save()
 
