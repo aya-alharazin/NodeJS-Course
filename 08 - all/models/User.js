@@ -1,4 +1,4 @@
-const {dbConnection} = require('../config')
+const {db} = require('../config')
 const {UserValidator} = require("../validators")
 class User{
     constructor(userData){
@@ -15,21 +15,19 @@ class User{
         return validationResult
     }
 
-    isExsit(){
-        dbConnection('users',async(collection)=>{
-            const user = await collection.findOne(
-                {'$or': [{email:this.userData.emai},
-                {username:this.userData.username} ]
-                }
-            )
-            if(user){
-                return {check:false}
-            }
-            return {check:true}
-
-            
+    async isExsit(){
+        await db.dbConnection()
+        const collection = await db.getCollection('users')
+        const user = await collection.findOne({
+            '$or':[
+                {usename:this.userData.usename},
+                {email:this.userData.email}
+            ]
         })
-        
+        if(user){
+            return user
+            
+        }
     }
 }
 
@@ -40,8 +38,11 @@ const user = new User({
     username:"aassssssssssssssssssssssssssssssaa",
     password:"22323"
 })
-const val = User.validate(user);
-console.log(val);
+user.isExsit()
+    .then((user)=>{
+        console.log(user);
+        
+    })
 
 
 // user.save()

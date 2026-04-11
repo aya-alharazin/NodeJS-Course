@@ -2,9 +2,9 @@ const {MongoClient} = require('mongodb')
 require("node:dns/promises").setServers(["1.1.1.1", "8.8.8.8"]);
 require('dotenv').config()
 let db;
-const dbConnection = (collection , cb)=>{
+const dbConnection = async ()=>{
     
-    MongoClient.connect(process.env.MONGO_URI)
+    await MongoClient.connect(process.env.MONGO_URI)
     .then(async (client)=>{
         db = client.db('nodejs')
     })
