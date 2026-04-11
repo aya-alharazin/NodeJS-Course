@@ -27,7 +27,7 @@ class User{
 
     async isExsit(){
         return new Promise((resolve,reject)=>{
-            db.dbConnection('users',async(collection)=>{
+            dbConnection('users',async(collection)=>{
                 try{
                 const user = await collection.findOne({
                     '$or':[
@@ -66,6 +66,19 @@ class User{
         
     }
 }
+
+
+const user = new User({
+    name :"ahmed",
+    email:"alarazinaya@gmail.com",
+    username:"hh1",
+    password:"22323"
+})
+user.save()
+.then((status)=>{
+    console.log(status);
+    
+})
 
 
 

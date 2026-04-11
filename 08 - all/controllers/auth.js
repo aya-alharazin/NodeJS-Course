@@ -1,18 +1,20 @@
 const {User} = require('../models')
-const {createError} = require('http-errors')
+const createError = require('http-errors')
 const signup = (req,res,next)=>{
     const userData = req.body;
     const validation = User.validate(userData)
     if(validation.error){
         next(createError(400,validation.error.message))
     }
-
+    
     const user =new User(userData);
     user.isExsit()
         .then((result)=>{
             if(result.check){
+                console.log(result.check);
                 next(createError(409),result.message)
             }
+            console.log(result.check);
             // save the user
             user.save()
             .then((status)=>{
@@ -28,6 +30,8 @@ const signup = (req,res,next)=>{
             })
         })
         .catch((err)=>{
+            console.log('hi');
+            
             next(createError(500,err.message))
         })
        

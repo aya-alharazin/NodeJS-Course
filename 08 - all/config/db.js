@@ -5,7 +5,7 @@ const dbConnection = async (collection ,cb)=>{
     
     await MongoClient.connect(process.env.MONGO_URI)
     .then(async (client)=>{
-        db = client.db('nodejs').collection(collection)
+        db = client.db('nodejs').collection(collection) 
         await cb(db)
         client.close()
 

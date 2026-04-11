@@ -2,6 +2,7 @@ const express = require('express')
 const createError = require('http-errors')
 const app = express()
 const routes = require('./routes')
+const middlewares = require('./middlewares')
 
 /* To Handle All Un Handeled Errors or Promises*/
 process.on('unhandledRejection',(reason)=>{
@@ -9,6 +10,7 @@ process.on('unhandledRejection',(reason)=>{
     
     process.exit(1)
 })
+middlewares(app)
 routes(app)
 // Not Found Handler
 app.use((req,res,next)=>{
