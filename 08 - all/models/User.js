@@ -5,9 +5,9 @@ class User{
         this.userData=userData
     }
 
-    save(){
+    async save(){
         try{
-            dbConnection('users',async (collection)=>{
+            await dbConnection('users',async (collection)=>{
                 await collection.insertOne(this.userData)
             })
             return {
@@ -69,13 +69,19 @@ class User{
 
 
 const user = new User({
-    name :"aya",
+    name :"ahmed",
     email:"alarazinaya@gmail.com",
     username:"hh1",
     password:"22323"
 })
-console.log(user.save());
+user.save()
+.then((status)=>{
+    console.log(status);
+    
+})
 
 
 
 // user.save()
+
+module.exports=User
