@@ -1,5 +1,6 @@
 const {dbConnection} = require('../config')
 const {UserValidator} = require("../validators")
+const {hashSync} = require('bcryptjs')
 class User{
     constructor(userData){
         this.userData=userData
@@ -7,6 +8,8 @@ class User{
  
     async save(){
         try{
+            const hashedPassword = hashSync(this.userData.password)
+            this.userData.password = hashedPassword
             await dbConnection('users',async (collection)=>{
                 await collection.insertOne(this.userData)
             })
