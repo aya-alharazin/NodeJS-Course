@@ -10,11 +10,12 @@ class User{
         try{
             const hashedPassword = hashSync(this.userData.password)
             this.userData.password = hashedPassword
-            await dbConnection('users',async (collection)=>{
+            const result = await dbConnection('users',async (collection)=>{
                 await collection.insertOne(this.userData)
             })
             return {
-                status:true
+                status:true,
+                _user_id:result.insertedId    
             }
         }catch(err){
             return {
