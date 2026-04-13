@@ -4,7 +4,7 @@ class User{
     constructor(userData){
         this.userData=userData
     }
-
+ 
     async save(){
         try{
             await dbConnection('users',async (collection)=>{
@@ -16,7 +16,7 @@ class User{
         }catch(err){
             return {
                 status:false,
-                message:err.message
+                message:err.message 
             }
         }
     }

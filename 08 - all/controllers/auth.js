@@ -12,8 +12,8 @@ const signup = (req,res,next)=>{
         .then((result)=>{
             if(result.check){
                 console.log(result.check);
-                next(createError(409),result.message)
-            }
+                next(createError(409,result.message))
+            } 
             console.log(result.check);
             // save the user
             user.save()
