@@ -12,39 +12,66 @@ const signup = (req,res,next)=>{
     user.isExsit()
         .then((result)=>{
             if(result.check){
-                console.log(result.check);
                 next(createError(409,result.message))
             } 
-            console.log(result.check);
             // save the user
             user.save()
-            .then((status)=>{
-                if(status.status){
-                    res.status(201).json({
-                        status:true,
-                        message:"user has been created successfully"
-                    })
-                    const reviewer =new Reviewer(
-                        {user_id: status._user_id,
-                         name:userData.name,
-                        email:userData.email}
-                    )
-                    reviewer.save()
-                    .then((status)=>{
-                        console.log(status);
+            .then((result)=>{
+                res.status(201).json({
+                    status:true,
+                    message:"User created successfully"
+                })
+                const reviewer = new Reviewer({
+                    _user_id:result._user_id,
+                    name:userData.name,
+                    email:userData.email                    
+                })
+                reviewer.save()
+                .then((status)=>{
+                    console.log('review save is done');
+                    
+                    if(status.status){
+                        console.log('reviewer created successfully');
                         
-                    })
-                }else{
-                    next(createError(500,status.message))
-                }
-                
+                    }else{
+                        console.log(status.message);
+                        
+                    }
+                })
             })
+            .catch((err)=>{
+                next(createError(500,err.message))
+            })
+            
+
         })
         .catch((err)=>{
-            console.log('hi');
-            
             next(createError(500,err.message))
         })
        
 }
-module.exports = signup
+
+const login = (req,res,next)=>{
+    User.login(req.body)
+    .then((data)=>{
+        if(data.status){
+           
+            res.status(200).json(data.data)
+        }else{
+            next(createError(data.code,data.message))
+        }
+    })
+    .catch((err)=>{
+        next(createError(err.code,err.message))
+    })
+
+}
+
+
+module.exports = {signup,login}
+
+
+
+
+
+

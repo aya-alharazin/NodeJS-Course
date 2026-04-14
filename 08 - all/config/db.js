@@ -1,23 +1,22 @@
-const {MongoClient} = require('mongodb')
+const { MongoClient } = require('mongodb')
 require("node:dns/promises").setServers(["1.1.1.1", "8.8.8.8"]);
 require('dotenv').config()
-const dbConnection = async (collection ,cb)=>{
-    
-    await MongoClient.connect(process.env.MONGO_URI)
-    .then(async (client)=>{
-        db = client.db('nodejs').collection(collection) 
-        await cb(db)
-        client.close()
 
-    })
-    .catch((err)=>{
-        console.log(err);
-    })
+let client      // the single connection, shared everywhere
+let db          // the database instance
+
+const connectDB = async () => {
+    client = await MongoClient.connect(process.env.MONGO_URI)
+    db = client.db('nodejs')
 }
 
+const getCollection = (collection) => {
+    if (!db) throw new Error('DB not connected yet!')
+    return db.collection(collection)
+}
+ 
+const closeDB = async () => {
+    if (client) await client.close()
+}
 
-
-module.exports = 
-    dbConnection
-
-
+module.exports = { connectDB, getCollection, closeDB }

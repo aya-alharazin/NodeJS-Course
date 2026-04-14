@@ -1,22 +1,27 @@
 const {dbConnection} = require('../config')
 class Reviewer{
-    constructor(ReviewerData){
-        this.ReviewerData=ReviewerData
+    constructor(reviewerData){
+        this.reviewerData=reviewerData
     }
 
 
     async save(){
         try{
-        await dbConnection('reviewers' ,async  (collection)=>{
-            await collection.insertOne(this.ReviewerData)
-        })
+            
+        const collection =  dbConnection.getCollection('reviewers')
+        
+        await collection.updateOne(
+            {name:this.reviewerData.name,_user_id:null},
+            {$set:{_user_id:this.reviewerData._user_id}},
+            {upsert:true}
+        )
         return {
             status:true
         }
-        }catch(e){
+        }catch(err){
             return {
                 status:false,
-                message:e.message
+                message:err.message
             }
         }
     }

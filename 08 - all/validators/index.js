@@ -1,3 +1,6 @@
+const {scheme,loginScheme} = require('./user')
 module.exports = {
-    UserValidator :require('./user')
+    UserValidator :scheme,
+    loginValidator:loginScheme
+
 }
