@@ -101,7 +101,7 @@ class User{
             return {
                 status:false,
                 data:null,
-                code:401,
+                code:401, 
                 message:"username is wrong"
             }
             const isMatch = compareSync(loginData.password,user.password)
@@ -122,7 +122,7 @@ class User{
                 status:false,
                 data:null,
                 code:401 ,
-                message:"password is wrong"
+                message:"your password is wrong"
             }
         }catch(err){
             return {
