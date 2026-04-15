@@ -12,9 +12,10 @@ const add = (req,res,next)=>{
         return next(createError(400,validation.error.message))
     }
 
+
+    const review = new Review(reviewData)
     review.reviewData._book_id = new ObjectId(review.reviewData._book_id)
     review.reviewData._reviewer_id = new ObjectId(review.reviewData._reviewer_id)
-    const review = new Review(reviewData)
     review.save()
     .then((data)=>{
         if(!data.status){
