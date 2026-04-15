@@ -2,6 +2,7 @@ const {User} = require('../models')
 const{Reviewer} = require("../models")
 const createError = require('http-errors')
 const jwt= require('jsonwebtoken')
+const {readFileSync} = require('fs')
 const signup = (req,res,next)=>{
     const userData = req.body;
     const validation = User.validate(userData)
@@ -56,7 +57,7 @@ const login = (req,res,next)=>{
     User.login(req.body)
     .then((data)=>{
         if(data.status){
-            const jwtSecretKey ="ayanabilisthebestever"
+            const jwtSecretKey =readFileSync('./config/private.key')
            const token = jwt.sign(
             {
                 _id:data.data._id,
