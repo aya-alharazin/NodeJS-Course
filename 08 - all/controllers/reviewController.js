@@ -12,6 +12,20 @@ const add = (req,res,next)=>{
     }
 
 
+    const review = new Review(reviewData)
+    review.save()
+    .then((data)=>{
+        if(!data.status){
+            return next(createError(500))
+        }
+        res.status(200).json({
+            status:true,
+            data:review
+        })
+    })
+    .catch((err)=>{
+
+    })
 
 
 
