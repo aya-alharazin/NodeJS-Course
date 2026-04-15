@@ -28,7 +28,7 @@ const getBooksPageCount = (req,res,next)=>{
         })
     })
     .catch((err)=>{
-        return next(createError(500))
+        return next(createError(500,"hi bookController"))
     })
         
     
@@ -37,13 +37,13 @@ const getBooksPageCount = (req,res,next)=>{
 const getBookById = (req,res,next)=>{
     if(!ObjectId.isValid(req.params.id)){
         const err = createError(400,'Id is not valid')
-        next(err)
+        return next(err)
     }
     const _id = new ObjectId(req.params.id)
     Book.getBookById(_id)
     .then((data)=>{
         if(!data.status){
-            return next(409,"this book not found")
+            return next(createError(409,"this book not found"))
         }
         res.status(200).json(data.book)
     })
@@ -55,13 +55,13 @@ const getBookById = (req,res,next)=>{
         const book = await collection.findOne(_id)
         if(!book){
             const err = createError(404,'book not found')
-            next(err)
+            return next(err)
         }
         res.json(book)
 
     }catch(err){
         const error = createError(500,err.message)
-        next(error)
+        return next(error)
     }        
     })
     

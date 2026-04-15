@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const {createError} = require('http-error')
+const createError = require('http-error')
 const {readFileSync} = require('fs')
 module.exports=(req,res,next)=>{
     const authHeader = req.get('Authorization')
@@ -15,6 +15,6 @@ module.exports=(req,res,next)=>{
     req._reviewer_id = decode._reviewer_id
     next()
     }catch(err){
-        return next(createError(401))
+        return next(createError(401,"hi guys"))
     }
 }
