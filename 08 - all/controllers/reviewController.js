@@ -1,5 +1,6 @@
 const {Review} = require("../models");
 const createError = require('http-errors')
+const {ObjectId} = require('bson')
 
 const add = (req,res,next)=>{
     const reviewData = req.body;
@@ -11,7 +12,8 @@ const add = (req,res,next)=>{
         return next(createError(400,validation.error.message))
     }
 
-
+    review.reviewData._book_id = new ObjectId(review.reviewData._book_id)
+    review.reviewData._reviewer_id = new ObjectId(review.reviewData._reviewer_id)
     const review = new Review(reviewData)
     review.save()
     .then((data)=>{
@@ -29,4 +31,8 @@ const add = (req,res,next)=>{
 
 
 
+}
+
+module.exports = {
+    add
 }
