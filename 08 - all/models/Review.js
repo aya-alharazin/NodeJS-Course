@@ -1,4 +1,5 @@
 const {dbConnection} = require('../config')
+const {reviewValidator} = require('../validators')
 class Review{
     constructor(reviewData){
         this.reviewData=reviewData
@@ -47,7 +48,10 @@ class Review{
 
 
 
-
+    static validate(reviewData){
+        const validation = reviewValidator.validate(reviewData)
+        return validation
+    }
 
 
 
@@ -57,3 +61,4 @@ class Review{
 
 
 }
+module.exports=Review
