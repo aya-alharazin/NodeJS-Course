@@ -1,7 +1,7 @@
 const {dbConnection} = require('../config')
 const {UserValidator,loginValidator} = require("../validators")
 const {hashSync,compareSync} = require('bcryptjs')
-const{Reviewer} = require("../models")
+
 class User{
     constructor(userData){
         this.userData=userData
@@ -86,6 +86,7 @@ class User{
 
 
      static async login (loginData){
+        const{Reviewer} = require("../models")
         const validationResult = loginValidator.validate(loginData)
         if(validationResult.error){
             return {
