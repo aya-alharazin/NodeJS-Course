@@ -1,4 +1,7 @@
 const express = require('express')
-module.exports = (app)=>{
-    app.use(express.json())
-} 
+module.exports = {
+    global: (app)=>{
+        app.use(express.json())
+    } ,
+    auth: require('./auth')
+}
