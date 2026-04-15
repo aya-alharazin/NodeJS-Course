@@ -1,6 +1,7 @@
 const {dbConnection} = require('../config')
 const {ObjectId} = require('bson')
 const createError = require('http-errors')
+const {Book} = require('../models')
 const getBooks = (req,res,next)=>{
     const pageNumber = parseInt(req.query.page)
     if(isNaN(pageNumber)){
@@ -9,12 +10,14 @@ const getBooks = (req,res,next)=>{
             message:"page not found"
         })
     }
-    const limit = 1
-    const skip = (pageNumber-1)*limit
-     dbConnection('books',async (collection)=>{
-        const books = await collection.find({}).limit(limit).skip(skip).toArray()
-        res.send(books)
+    Book.getBooks(pageNumber)
+    .then((data)=>{
+        res.status(200).json(data.data)
     })
+    .catch((err)=>{
+        return next(createError(500,err.message))
+    })
+    
 }
 
 const getBooksPageCount = (req,res,next)=>{
