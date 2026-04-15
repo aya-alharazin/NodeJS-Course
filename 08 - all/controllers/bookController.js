@@ -21,14 +21,17 @@ const getBooks = (req,res,next)=>{
 }
 
 const getBooksPageCount = (req,res,next)=>{
-    dbConnection('books',async (collection)=>{
-        const limit =1
-        const count = await collection.count({})
-        const noOfPages = Math.ceil(count/limit)
+    Book.getBooksPageCount()
+    .then((data)=>{
         res.status(200).json({
-            "page Counts":noOfPages
+            "page Counts":data.noOfPages
         })
     })
+    .catch((err)=>{
+        return next(createError(500))
+    })
+        
+    
 }
 
 const getBookById = (req,res,next)=>{
@@ -37,6 +40,16 @@ const getBookById = (req,res,next)=>{
         next(err)
     }
     const _id = new ObjectId(req.params.id)
+    Book.getBookById(_id)
+    .then((data)=>{
+        if(!data.status){
+            return next(409,"this book not found")
+        }
+        res.status(200).json(data.book)
+    })
+    .catch((err)=>{
+        return next(createError(500,err.message))
+    })
     dbConnection('books', async (collection)=>{
     try{
         const book = await collection.findOne(_id)
