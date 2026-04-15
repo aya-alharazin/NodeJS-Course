@@ -1,18 +1,19 @@
 const {User} = require('../models')
 const{Reviewer} = require("../models")
 const createError = require('http-errors')
+const jwt= require('jsonwebtoken')
 const signup = (req,res,next)=>{
     const userData = req.body;
     const validation = User.validate(userData)
     if(validation.error){
-        next(createError(400,validation.error.message))
+        return next(createError(400,validation.error.message))
     }
     
     const user =new User(userData);
     user.isExsit()
         .then((result)=>{
             if(result.check){
-                next(createError(409,result.message))
+                return next(createError(409,result.message))
             } 
             // save the user
             user.save()
@@ -40,7 +41,7 @@ const signup = (req,res,next)=>{
                 })
             })
             .catch((err)=>{
-                next(createError(500,err.message))
+                return next(createError(500,err.message))
             })
             
 
@@ -55,14 +56,23 @@ const login = (req,res,next)=>{
     User.login(req.body)
     .then((data)=>{
         if(data.status){
-           
-            res.status(200).json(data.data)
+            const jwtSecretKey ="ayanabilisthebestever"
+           const token = jwt.sign(
+            {
+                _id:data.data._id,
+                _reviewer_id:data.data.reviewer._id
+            },jwtSecretKey
+           )
+            res.status(200).json({
+                token:token,
+                status:true
+            })
         }else{
-            next(createError(data.code,data.message))
+            return next(createError(data.code,data.message))
         }
     })
     .catch((err)=>{
-        next(createError(err.code,err.message))
+        return next(createError(500,err.message))
     })
 
 }
