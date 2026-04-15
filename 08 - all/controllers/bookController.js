@@ -2,15 +2,18 @@ const {ObjectId} = require('bson')
 const createError = require('http-errors')
 const {Book} = require('../models')
 const getBooks = (req,res,next)=>{
-    const pageNumber = parseInt(req.query.page)
+    const pageNumber = parseInt(req.query.page, 10)
     if(isNaN(pageNumber)){
-        res.status(400).json({
+        return res.status(400).json({
             status:false,
             message:"page not found"
         })
     }
     Book.getBooks(pageNumber)
     .then((data)=>{
+        if (!data.status) {
+            return next(createError(500, data.message || 'retrieving books failed'))
+        }
         res.status(200).json(data.data)
     })
     .catch((err)=>{

@@ -1,3 +1,5 @@
+const { dbConnection } = require('../config')
+
 class Book{
     constructor(bookData){
         this.bookData=bookData
@@ -13,10 +15,10 @@ class Book{
             data:books,
             status:true
          }
-        }catch{
+        }catch(err){
             return{
                 status:false,
-                message:'retreiving books failed'
+                message: err.message || 'retrieving books failed'
             }
         }
     }
@@ -50,7 +52,7 @@ class Book{
         
         
         try{
-            const book = await collection.findOne(_id)
+            const book = await collection.findOne({ _id })
             if(!book){
                 return {
                     status:false,
@@ -64,6 +66,7 @@ class Book{
     
         }catch(err){
             return {
+                status:false,
                 message:err.message
             }
         }        
