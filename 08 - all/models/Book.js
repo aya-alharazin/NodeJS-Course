@@ -63,10 +63,8 @@ class Book{
             }
     
         }catch(err){
-            const error = createError(500,err.message)
             return {
-                message:err.messag
-                
+                message:err.message
             }
         }        
        

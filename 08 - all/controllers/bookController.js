@@ -1,4 +1,3 @@
-const {dbConnection} = require('../config')
 const {ObjectId} = require('bson')
 const createError = require('http-errors')
 const {Book} = require('../models')
@@ -28,7 +27,7 @@ const getBooksPageCount = (req,res,next)=>{
         })
     })
     .catch((err)=>{
-        return next(createError(500,"hi bookController"))
+        return next(createError(500,err.message))
     })
         
     
@@ -43,27 +42,14 @@ const getBookById = (req,res,next)=>{
     Book.getBookById(_id)
     .then((data)=>{
         if(!data.status){
-            return next(createError(409,"this book not found"))
+            return next(createError(404,"this book not found"))
         }
         res.status(200).json(data.book)
     })
     .catch((err)=>{
         return next(createError(500,err.message))
     })
-    dbConnection('books', async (collection)=>{
-    try{
-        const book = await collection.findOne(_id)
-        if(!book){
-            const err = createError(404,'book not found')
-            return next(err)
-        }
-        res.json(book)
-
-    }catch(err){
-        const error = createError(500,err.message)
-        return next(error)
-    }        
-    })
+    
     
 }
 
