@@ -1,6 +1,5 @@
 const { MongoClient } = require('mongodb')
 require("node:dns/promises").setServers(["1.1.1.1", "8.8.8.8"]);
-require('dotenv').config()
 
 let client      // the single connection, shared everywhere
 let db          // the database instance

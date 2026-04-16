@@ -54,8 +54,38 @@ class Review{
     }
 
 
-
-
+    static async remove(_id){
+        try{
+        const collection = dbConnection.getCollection('reviews')
+        await collection.deleteOne({_id})
+        return{
+            status:true
+        }
+        }catch(err){
+            return{
+                status:false,
+                message:err.message
+            }
+        }
+    }
+    static async getOne(_id){
+        try{
+        const collection = dbConnection.getCollection('reviews')
+        const review = collection.findOne({_id})
+        if(review){
+            return {
+                status:true,data:review
+            }
+        }else{
+            return{
+                status:false
+            }
+        }
+        
+        }catch(err){
+            return err
+        }
+    }
 
 
 

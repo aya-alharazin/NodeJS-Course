@@ -1,6 +1,7 @@
-const {Review} = require("../models");
+const {Review,Book} = require("../models");
 const createError = require('http-errors')
-const {ObjectId} = require('bson')
+const {ObjectId} = require('bson');
+
 
 const add = (req,res,next)=>{
     const reviewData = req.body;
@@ -24,19 +25,57 @@ const add = (req,res,next)=>{
         if(!data.status){
             return next(createError(500))
         }
-        res.status(200).json({
-            status:true,
-            data:review
-        })
+        Book.refreshAvgRating(review.reviewData._reviewer_id)
+        // res.status(200).json({
+        //     status:true,
+        //     data:review
+        // })
+        return returnJson(res,200,true,"",review)
     })
     .catch((err)=>{
 
     })
 
+    const remove = (req,res,next)=>{
+       const _id =  new ObjectId(req.params.id);
+       Review.getOne(_id)
+       .then((result)=>{
+            if(!result.status){
+                return next(createError(404,))
+            }
+            const _book_id = result.data._book_id
 
+            Review.remove
+            .then((result)=>{
+                 if(result.status){
+                    // res.status(200).json(result)
+                    returnJson(res,200,true,"",null)
+                    Book.refreshAvgRating(_book_id)
+                 }else{
+                     return next(createError(500,result.message))
+                 }
+            })
+            .catch((err)=>{
+                  return next(createError(500,err.message))
+            })
+
+
+
+
+
+
+
+
+
+       })
+       .catch((err)=>{
+            return next(createError(500,err.message))
+       })
+       
+    }
 
 }
 
 module.exports = {
-    add
+    add,remove
 }

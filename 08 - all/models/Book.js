@@ -1,4 +1,5 @@
 const { dbConnection } = require('../config')
+const { getCollection } = require('../config/db')
 
 class Book{
     constructor(bookData){
@@ -75,7 +76,25 @@ class Book{
     }
 
 
+    static async refreshAvgRating(_book_id){
+        const collection =  dbConnection.getCollection('reviews')
+        const reviews = await collection.find({_book_id:_book_id}).toArray()
+        let sum = 0
+        const count = reviews.length
+        for(let i=0;i<count;i++){
+            if(reviews[i].rating){
+                sum+=reviews[i].rating
+            }
+        }
+        const avg = sum/count
+        const collection2 = await dbConnection.getCollection('books')
+        collection2.updateOne(
+            {_id:_book_id},
+            {$set:{avg_rating:avg}}
+        ).toArray()
 
+    
+    }
 
 
 

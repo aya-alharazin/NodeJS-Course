@@ -19,10 +19,11 @@ const signup = (req,res,next)=>{
             // save the user
             user.save()
             .then((result)=>{
-                res.status(201).json({
-                    status:true,
-                    message:"User created successfully"
-                })
+                // res.status(201).json({
+                //     status:true,
+                //     message:"User created successfully"
+                // })
+                returnJson(res,201,true,"User created successfully",null)
                 const reviewer = new Reviewer({
                     _user_id:result._user_id,
                     name:userData.name,
@@ -64,10 +65,11 @@ const login = (req,res,next)=>{
                 _reviewer_id:data.data.reviewer._id
             },jwtSecretKey
            )
-            res.status(200).json({
-                token:token,
-                status:true
-            })
+            // res.status(200).json({
+            //     token:token,
+            //     status:true
+            // })
+            return returnJson(res,200,true,"",{token})
         }else{
             return next(createError(data.code,data.message))
         }
